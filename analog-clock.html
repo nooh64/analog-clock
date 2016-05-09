@@ -1,0 +1,185 @@
+<link rel="import"
+      href="bower_components/polymer/polymer.html">
+	  
+<!--
+A analog clock
+##### Examples
+    <analog-clock></analog-clock>
+    <analog-clock notrunning></analog-clock>
+    <analog-clock date="October 13, 2014 10:10:00"></analog-clock>
+	
+@demo
+@element analog-clock
+@homepage http://nooh64.github.io/fanalog-clock
+@author NOOH K V M
+-->
+
+
+<dom-module id="analog-clock">	
+	<style>
+	 #clock {
+		position: relative;
+		display: block;
+		border: 2px solid #3F51B5;
+		border-radius: 50%;
+	}
+	.hour-hand {
+		position: absolute;
+		top: 50%;
+		left: 50%;		
+		margin: -2px 0 -2px -25%;
+		padding: 2px 0 2px 25%;
+		border-radius: 2px 0 0 2px;
+		background: #009688;
+		transform-origin: 100% 50%;
+		-ms-transform-origin: 100% 50%;
+		-webkit-transform-origin: 100% 50%;	
+	}	
+	.minute-hand {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -1px 0 -2px -48%;
+		padding: 1px 0 2px 48%;
+		border-radius: 2px 0 0 2px;
+		background: #3F51B5;
+		transform-origin: 100% 50%;
+		-ms-transform-origin: 100% 50%;
+		-webkit-transform-origin: 100% 50%;
+	}
+	.second-hand {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -1px 0 -1px -48%;
+		padding: 1px 0 1px 48%;
+		border-radius: 2px 0 0 2px;
+		background: #F44336;
+		transform-origin: 100% 50%;
+		-ms-transform-origin: 100% 50%;
+		-webkit-transform-origin: 100% 50%;	
+	}
+	.clock-centre {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		padding: 4px;
+		margin: -4px;
+		background: #3F51B5;
+		border-radius: 50%;
+	}
+    </style>
+
+  <template>
+	   <div id="clock">
+		   <div id="hour" class='hour-hand'></div>
+		   <div id="minute" class='minute-hand'></div>
+		   <div id="second" class='second-hand'></div>
+		   <div id="centre" class='clock-centre'></div>
+	   <div>
+  </template>
+  
+  
+<script>
+
+  Polymer({
+    is: "analog-clock",
+    ready: function() {
+		console.log(this.notrunning);
+		this.date=this.date?new Date(this.date):new Date();
+		var self=this;
+		if(!this.notrunning){
+				self.interrval=setInterval(function(){
+				console.log(self.date.getSeconds());
+				self.date.setSeconds(self.date.getSeconds()+1);
+				self._update();
+			}, 1000);
+		}else{
+			self._update();
+		}
+    },
+	properties: {
+	   /**
+       * Hour hand color
+       *
+       * @attribute hcolor
+       * @type String
+       * @default #009688
+       */
+        hcolor: String,
+	   /**
+       * Minute hand color
+       *
+       * @attribute mcolor
+       * @type String
+       * @default #009688
+       */
+		mcolor: String,
+	   /**
+       * Second hand color
+       *
+       * @attribute scolor
+       * @type String
+       * @default #009688
+       */
+		scolor: String,
+	   /** size of clock
+       *
+       * @attribute size
+       * @type String
+       */
+		size: {
+			type:String,
+			value:"200px",
+		},
+		date: String,
+	   /** clock will not run, if its set to true
+       *
+       * @attribute notrunning
+       * @type Boolean
+       */
+		notrunning:{
+			type:Boolean,
+			value:false,
+			observer: '_runningChanged'
+		}
+     },
+	 attached:function(){
+		this.$.clock.style.width=this.size;
+		this.$.clock.style.height=this.size;
+		this.$.hour.style.background=this.hcolor;
+		this.$.minute.style.background=this.mcolor;
+		this.$.second.style.background=this.scolor;
+	 },
+	 _runningChanged:function(newValue, oldValue){
+		//this.ready();
+	 },
+	 _update:function(){
+			
+			 var hour = this.date.getHours(),
+			 minute = this.date.getMinutes(),
+			 second = this.date.getSeconds();
+			 
+			 var secondAngle = second * 6,
+			 minuteAngle = minute * 6 + secondAngle / 60;
+			 
+			 var secondTransform = "rotate(" + (secondAngle+90) + "deg)",
+			 minuteTransform = "rotate(" + (minuteAngle+90) + "deg)",
+			 hourTransform = "rotate(" + (( ( hour % 12 ) / 12 ) * 360 + 90 + minute / 12) + "deg)";
+
+			this.$.hour.style.transform = hourTransform;
+			this.$.hour.style.webkitTransform = hourTransform;
+			this.$.hour.style.msTransform = hourTransform;			
+			
+			this.$.minute.style.transform = minuteTransform;
+			this.$.minute.style.webkitTransform = minuteTransform;			
+			this.$.minute.style.msTransform = minuteTransform;
+
+			this.$.second.style.transform = secondTransform;	
+			this.$.second.style.webkitTransform = secondTransform;
+			this.$.second.style.msTransform = secondTransform;
+		
+	 }
+  });
+</script> 
+</dom-module>

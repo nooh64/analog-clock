@@ -1,0 +1,27 @@
+{
+  "name": "analog-clock",
+  "version": "1.0.1",
+  "authors": [
+    "Nooh K V M <nooh64@gmail.com>"
+  ],
+  "description": "Analog Clock",
+  "keywords": [
+    "analog",
+    "custom",
+    "elements",
+    "polymer",
+	"web-components"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~1.4.0",
+    "iron-component-page": "PolymerElements/iron-component-page#~1.1.6"
+  }
+}
