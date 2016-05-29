@@ -4,9 +4,20 @@
 <!--
 A analog clock
 ##### Examples
-    <analog-clock></analog-clock>
-    <analog-clock notrunning></analog-clock>
-    <analog-clock date="October 13, 2014 10:10:00"></analog-clock>
+
+  <p>The default analog clock:</p>
+  <analog-clock></analog-clock>
+  
+  <p>An analog clock with a set date:</p>
+  <analog-clock date="October 13, 2014 10:10:00"></analog-clock>
+  
+  <p>An analog clock with custom colors</p>
+  <analog-clock
+    hcolor="black"
+    mcolor="blue"
+    scolor="green"
+    bcolor="red"
+    ccolor="purple"></analog-clock>
 	
 @demo
 @element analog-clock
@@ -123,6 +134,22 @@ A analog clock
        * @default #009688
        */
 		scolor: String,
+    /**
+       * Clock border color
+       *
+       * @attribute bcolor
+       * @type String
+       * @default #3F51B5
+       */
+		bcolor: String,
+    /**
+       * Clock center color
+       *
+       * @attribute ccolor
+       * @type String
+       * @default #3F51B5
+       */
+		ccolor: String,
 	   /** size of clock
        *
        * @attribute size
@@ -147,9 +174,11 @@ A analog clock
 	 attached:function(){
 		this.$.clock.style.width=this.size;
 		this.$.clock.style.height=this.size;
+    this.$.clock.style.borderColor=this.bcolor;
 		this.$.hour.style.background=this.hcolor;
 		this.$.minute.style.background=this.mcolor;
 		this.$.second.style.background=this.scolor;
+    this.$.centre.style.background=this.ccolor;
 	 },
 	 _runningChanged:function(newValue, oldValue){
 		//this.ready();
