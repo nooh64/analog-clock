@@ -123,6 +123,22 @@ A analog clock
        * @default #009688
        */
 		scolor: String,
+    /**
+       * Clock border color
+       *
+       * @attribute bcolor
+       * @type String
+       * @default #3F51B5
+       */
+		bcolor: String,
+    /**
+       * Clock center color
+       *
+       * @attribute ccolor
+       * @type String
+       * @default #3F51B5
+       */
+		ccolor: String,
 	   /** size of clock
        *
        * @attribute size
@@ -147,9 +163,11 @@ A analog clock
 	 attached:function(){
 		this.$.clock.style.width=this.size;
 		this.$.clock.style.height=this.size;
+    this.$.clock.style.borderColor=this.bcolor;
 		this.$.hour.style.background=this.hcolor;
 		this.$.minute.style.background=this.mcolor;
 		this.$.second.style.background=this.scolor;
+    this.$.centre.style.background=this.ccolor;
 	 },
 	 _runningChanged:function(newValue, oldValue){
 		//this.ready();
